@@ -3,26 +3,26 @@ using namespace sf;
 
 const float a = 0.05;	// Ускорение свободного падения
 const int Xwin = 1000,	// Ширина экрана
-		  Ywin = 650,	// Äëèíà ýêðàíà
-		  CountF = 20,	// Êîë-âî ðàêåò
-		  MaxP = 100,	// Ìàêñ êîë-âî ïàðòèêëîâ
-		  MinP = 20;	// Ìèíèìàëüíîå êîë-âî ïàðòèêëîâ
+		  Ywin = 650,	// Длина экрана
+		  CountF = 20,	// Кол-во ракет
+		  MaxP = 100,	// Макс кол-во партиклов
+		  MinP = 20;	// Минимальное кол-во партиклов
 
 RenderWindow window(sf::VideoMode(Xwin, Ywin), "FireworksSUKABLUAT", Style::Close);
 CircleShape particle(1), rocket(3);
 
 class Firework {
 private:
-	const int MinColor = 20;	// Ìèíèìàëüíîå çíà÷åíèå öâåòà
+	const int MinColor = 20;	// Минимальное значение цвета
 public:
-	Vector2f coor, v;	// Êîîðäèíàòà, ñêîðîñòü
-	bool isBurst;		// Ïðîâåðêà íà âçðûâ
-	int CountP, alpha,	// Êîë-âî ïàðòèêëîâ, ïðîçðà÷íîñòü è ïðîäîëæèòåëüíîñòü æèçíè
-		color[3];		// Öâåò 
+	Vector2f coor, v;	// Координата, скорость
+	bool isBurst;		// Проверка на взрыв
+	int CountP, alpha,	// Кол-во партиклов, прозрачность и продолжительность жизни
+		color[3];		// Цвет 
 	Firework() {
 		update();
 	}
-	void update() {		// Çàäàåò íà÷àëüíîå çíà÷åíèå ðàêåòå
+	void update() {		// Задает начальные значения ракете
 		coor.x = rand() % (Xwin - 5) + 5,
 		coor.y = rand() % (Ywin / 2) + Ywin;
 		v = {0, (float)(rand() % 5 + 5)};
@@ -37,13 +37,13 @@ public:
 
 class Particle {
 private:
-	float RandDir[2] {-1, 1};	// Ðàíäîìèçèðóåò íàïðàâëåíèå ïîëåòà ÷àñòèö
+	float RandDir[2] {-1, 1};	// Рандомизирует направление полета частиц
 public:
-	Vector2f coor, v, tail[5];	// Êîîðäèíàòà, ñêîðîñòü, õâîñò îò ïàðòèêëà
+	Vector2f coor, v, tail[5];	// Координата, скорость, хвост от партикла
 	Particle() {		
 		update();
 	}
-	void update() {		// Çàäàåò íà÷àëüíîå çíà÷åíèå ïàðòèêëàì
+	void update() {		// Задает начальное значение партиклам
 		v.x = (float)(rand()) / (RAND_MAX) * 2 * RandDir[rand() % 2];
 		v.y = (float)(rand()) / (RAND_MAX) * 2 * RandDir[rand() % 2];
 		for (int i = 0; i < 5; ++i) {
@@ -51,20 +51,6 @@ public:
 		}
 	}
 };
-
-Particle** createArray2D() {
-	Particle** p = new Particle* [CountF];
-	p[0] = new Particle[MaxP * CountF];
-	for (int i = 1; i < MaxP; ++i) {
-		p[i] = p[i - 1] + MaxP;
-	}
-	return p;
-}
-
-void deleteArray2D(Particle** p) {
-	delete[] p[0];
-	delete[] p;
-}
 
 int main() {
 	window.setFramerateLimit(60);
@@ -85,10 +71,10 @@ int main() {
 		t /= 10;
 
 		for (int i = 0; i < CountF; ++i) {
-			if (f[i].alpha <= 0) {		// Óñëîâèå âûõîäà èç âçðûâà ÷àñòèö
+			if (f[i].alpha <= 0) {		// Условие выхода из взрыва частиц
 				f[i].update();
 			}
-			else if (f[i].v.y <= 0 && f[i].isBurst == false) {	// Óñëîâèå âûõîäà èç ïîëåòà ðàêåòû
+			else if (f[i].v.y <= 0 && f[i].isBurst == false) {	// Условие выхода из полета ракеты
 				f[i].isBurst = true;
 				for (int start = 0; start < f[i].CountP; ++start) {
 					p[i][start].coor = f[i].coor;
@@ -96,14 +82,14 @@ int main() {
 				}
 			}			
 
-			if (f[i].isBurst == true) {		// Ôóíêöèÿ âçðûâà ðàêåòû
+			if (f[i].isBurst == true) {		// Функция взрыва ракеты
 				for (int j = 0; j < f[i].CountP; ++j) {
 					p[i][j].coor += {(float)(p[i][j].v.x * t), (float)(p[i][j].v.y * t + a * t * t * 0.5)};
 					p[i][j].v += {0, (float)(a * t)};
 					particle.setFillColor(Color(f[i].color[0], f[i].color[1], f[i].color[2], f[i].alpha));
 					particle.setPosition(p[i][j].coor);
 					window.draw(particle);
-					//// Ðåàëèçàöèÿ õâîñòà ó ÷àñòèö ////
+					//// Реализация хвоста у частиц ////
 					for (int k = 0; k < 4; ++k) {
 						p[i][j].tail[k] = p[i][j].tail[k + 1];
 						particle.setPosition(p[i][j].tail[k]);
@@ -116,7 +102,7 @@ int main() {
 				}
 				f[i].alpha -= 5;
 			}
-			else {		// Ôóíêöèÿ ïîëåòà ðàêåòû
+			else {		// Функция полета ракеты
 				f[i].coor -= {0, f[i].v.y * t};
 				f[i].v -= {0, a * t};
 				rocket.setFillColor(Color(f[i].color[0], f[i].color[1], f[i].color[2], f[i].alpha));
