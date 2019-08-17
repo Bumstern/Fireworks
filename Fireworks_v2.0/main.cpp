@@ -1,28 +1,28 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
-const float a = 0.05;	// Ускорение свободного падения
-const int Xwin = 1000,	// Ширина экрана
-		  Ywin = 650,	// Длина экрана
-		  CountF = 20,	// Кол-во ракет
-		  MaxP = 100,	// Макс кол-во партиклов
-		  MinP = 20;	// Минимальное кол-во партиклов
+const float a = 0.05;	// РЈСЃРєРѕСЂРµРЅРёРµ СЃРІРѕР±РѕРґРЅРѕРіРѕ РїР°РґРµРЅРёСЏ
+const int Xwin = 1000,	// РЁРёСЂРёРЅР° СЌРєСЂР°РЅР°
+		  Ywin = 650,	// Г„Г«ГЁГ­Г  ГЅГЄГ°Г Г­Г 
+		  CountF = 20,	// ГЉГ®Г«-ГўГ® Г°Г ГЄГҐГІ
+		  MaxP = 100,	// ГЊГ ГЄГ± ГЄГ®Г«-ГўГ® ГЇГ Г°ГІГЁГЄГ«Г®Гў
+		  MinP = 20;	// ГЊГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ ГЄГ®Г«-ГўГ® ГЇГ Г°ГІГЁГЄГ«Г®Гў
 
 RenderWindow window(sf::VideoMode(Xwin, Ywin), "FireworksSUKABLUAT", Style::Close);
 CircleShape particle(1), rocket(3);
 
 class Firework {
 private:
-	const int MinColor = 20;	// Минимальное значение цвета
+	const int MinColor = 20;	// ГЊГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г¶ГўГҐГІГ 
 public:
-	Vector2f coor, v;	// Координата, скорость
-	bool isBurst;		// Проверка на взрыв
-	int CountP, alpha,	// Кол-во партиклов, прозрачность и продолжительность жизни
-		color[3];		// Цвет 
+	Vector2f coor, v;	// ГЉГ®Г®Г°Г¤ГЁГ­Г ГІГ , Г±ГЄГ®Г°Г®Г±ГІГј
+	bool isBurst;		// ГЏГ°Г®ГўГҐГ°ГЄГ  Г­Г  ГўГ§Г°Г»Гў
+	int CountP, alpha,	// ГЉГ®Г«-ГўГ® ГЇГ Г°ГІГЁГЄГ«Г®Гў, ГЇГ°Г®Г§Г°Г Г·Г­Г®Г±ГІГј ГЁ ГЇГ°Г®Г¤Г®Г«Г¦ГЁГІГҐГ«ГјГ­Г®Г±ГІГј Г¦ГЁГ§Г­ГЁ
+		color[3];		// Г–ГўГҐГІ 
 	Firework() {
 		update();
 	}
-	void update() {		// Задает начальное значение ракете
+	void update() {		// Г‡Г Г¤Г ГҐГІ Г­Г Г·Г Г«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г°Г ГЄГҐГІГҐ
 		coor.x = rand() % (Xwin - 5) + 5,
 		coor.y = rand() % (Ywin / 2) + Ywin;
 		v = {0, (float)(rand() % 5 + 5)};
@@ -37,13 +37,13 @@ public:
 
 class Particle {
 private:
-	float RandDir[2] {-1, 1};	// Рандомизирует направление полета частиц
+	float RandDir[2] {-1, 1};	// ГђГ Г­Г¤Г®Г¬ГЁГ§ГЁГ°ГіГҐГІ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ ГЇГ®Г«ГҐГІГ  Г·Г Г±ГІГЁГ¶
 public:
-	Vector2f coor, v, tail[5];	// Координата, скорость, хвост от партикла
+	Vector2f coor, v, tail[5];	// ГЉГ®Г®Г°Г¤ГЁГ­Г ГІГ , Г±ГЄГ®Г°Г®Г±ГІГј, ГµГўГ®Г±ГІ Г®ГІ ГЇГ Г°ГІГЁГЄГ«Г 
 	Particle() {		
 		update();
 	}
-	void update() {		// Задает начальное значение партиклам
+	void update() {		// Г‡Г Г¤Г ГҐГІ Г­Г Г·Г Г«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ ГЇГ Г°ГІГЁГЄГ«Г Г¬
 		v.x = (float)(rand()) / (RAND_MAX) * 2 * RandDir[rand() % 2];
 		v.y = (float)(rand()) / (RAND_MAX) * 2 * RandDir[rand() % 2];
 		for (int i = 0; i < 5; ++i) {
@@ -85,10 +85,10 @@ int main() {
 		t /= 10;
 
 		for (int i = 0; i < CountF; ++i) {
-			if (f[i].alpha <= 0) {		// Условие выхода из взрыва частиц
+			if (f[i].alpha <= 0) {		// Г“Г±Г«Г®ГўГЁГҐ ГўГ»ГµГ®Г¤Г  ГЁГ§ ГўГ§Г°Г»ГўГ  Г·Г Г±ГІГЁГ¶
 				f[i].update();
 			}
-			else if (f[i].v.y <= 0 && f[i].isBurst == false) {	// Условие выхода из полета ракеты
+			else if (f[i].v.y <= 0 && f[i].isBurst == false) {	// Г“Г±Г«Г®ГўГЁГҐ ГўГ»ГµГ®Г¤Г  ГЁГ§ ГЇГ®Г«ГҐГІГ  Г°Г ГЄГҐГІГ»
 				f[i].isBurst = true;
 				for (int start = 0; start < f[i].CountP; ++start) {
 					p[i][start].coor = f[i].coor;
@@ -96,14 +96,14 @@ int main() {
 				}
 			}			
 
-			if (f[i].isBurst == true) {		// Функция взрыва ракеты
+			if (f[i].isBurst == true) {		// Г”ГіГ­ГЄГ¶ГЁГї ГўГ§Г°Г»ГўГ  Г°Г ГЄГҐГІГ»
 				for (int j = 0; j < f[i].CountP; ++j) {
 					p[i][j].coor += {(float)(p[i][j].v.x * t), (float)(p[i][j].v.y * t + a * t * t * 0.5)};
 					p[i][j].v += {0, (float)(a * t)};
 					particle.setFillColor(Color(f[i].color[0], f[i].color[1], f[i].color[2], f[i].alpha));
 					particle.setPosition(p[i][j].coor);
 					window.draw(particle);
-					//// Реализация хвоста у частиц ////
+					//// ГђГҐГ Г«ГЁГ§Г Г¶ГЁГї ГµГўГ®Г±ГІГ  Гі Г·Г Г±ГІГЁГ¶ ////
 					for (int k = 0; k < 4; ++k) {
 						p[i][j].tail[k] = p[i][j].tail[k + 1];
 						particle.setPosition(p[i][j].tail[k]);
@@ -116,7 +116,7 @@ int main() {
 				}
 				f[i].alpha -= 5;
 			}
-			else {		// Функция полета ракеты
+			else {		// Г”ГіГ­ГЄГ¶ГЁГї ГЇГ®Г«ГҐГІГ  Г°Г ГЄГҐГІГ»
 				f[i].coor -= {0, f[i].v.y * t};
 				f[i].v -= {0, a * t};
 				rocket.setFillColor(Color(f[i].color[0], f[i].color[1], f[i].color[2], f[i].alpha));
