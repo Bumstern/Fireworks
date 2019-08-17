@@ -1,0 +1,14 @@
+﻿  main.cpp
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(4,21): warning C4305:  инициализация: усечение из "double" в "float"
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(26,32): warning C4244:  =: преобразование "int" в "T", возможна потеря данных
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(26,32): warning C4244:         with
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(26,32): warning C4244:         [
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(26,32): warning C4244:             T=float
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(26,32): warning C4244:         ]
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(27,32): warning C4244:  =: преобразование "int" в "T", возможна потеря данных
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(27,32): warning C4244:         with
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(27,32): warning C4244:         [
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(27,32): warning C4244:             T=float
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(27,32): warning C4244:         ]
+C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\Fireworks_v2.0\main.cpp(84,11): warning C4244:  инициализация: преобразование "sf::Int32" в "float", возможна потеря данных
+  Fireworks_v2.0.vcxproj -> C:\Users\Bumstern_Inc\source\repos\Fireworks_v2.0\x64\Debug\Fireworks_v2.0.exe
